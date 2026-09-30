@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>G-Bank — Personal banking, checking, and cards</title>
+  <script type="text/javascript" charset="utf-8">
+    (function (g, e, n, es, ys) {
+      g['_genesysJs'] = e;
+      g[e] = g[e] || function () {
+        (g[e].q = g[e].q || []).push(arguments)
+      };
+      g[e].t = 1 * new Date();
+      g[e].c = es;
+      ys = document.createElement('script'); ys.async = 1; ys.src = n; ys.charset = 'utf-8'; document.head.appendChild(ys);
+    })(window, 'Genesys', 'https://apps.inintca.com/genesys-bootstrap/genesys.min.js', {
+      environment: 'test',
+      deploymentId: 'c5ae6e8d-34f2-41ac-8078-60c040bf4c53'
+    });
+  </script>
+  <style>
+    :root {
+      --navy: #0c2340;
+      --navy-mid: #163a63;
+      --gold: #c4a35a;
+      --gold-light: #e8d5a3;
+      --ink: #1a2332;
+      --muted: #5b6573;
+      --line: #e4e8ee;
+      --paper: #f6f4ef;
+      --white: #ffffff;
+      --radius: 12px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    body, h1, h2, h3, p, ul, figure { margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      color: var(--ink);
+      background: var(--white);
+      line-height: 1.5;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    img { max-width: 100%; display: block; }
+
+    .wrap {
+      width: min(1120px, calc(100% - 40px));
+      margin-inline: auto;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--navy);
+      color: var(--white);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      min-height: 72px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 1.25rem;
+      letter-spacing: 0.02em;
+    }
+
+    .logo-mark {
+      width: 36px;
+      height: 36px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      list-style: none;
+      font-size: 0.95rem;
+    }
+
+    .nav-links a:hover { color: var(--gold-light); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 0;
+      border-radius: 8px;
+      padding: 10px 18px;
+      font: inherit;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-gold {
+      background: var(--gold);
+      color: var(--navy);
+    }
+
+    .btn-gold:hover { filter: brightness(1.08); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--white);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+    }
+
+    .btn-navy {
+      background: var(--navy);
+      color: var(--white);
+    }
+
+    .hero {
+      background:
+        radial-gradient(1200px 400px at 80% -10%, rgba(196, 163, 90, 0.22), transparent 55%),
+        linear-gradient(160deg, var(--navy) 0%, var(--navy-mid) 100%);
+      color: var(--white);
+      padding: 72px 0 88px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      color: var(--gold-light);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 4vw, 3.25rem);
+      line-height: 1.12;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+    }
+
+    .lede {
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.82);
+      max-width: 36rem;
+      margin-bottom: 28px;
+    }
+
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    .card {
+      background: var(--white);
+      color: var(--ink);
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.18);
+    }
+
+    .card h2 { font-size: 1.15rem; margin-bottom: 16px; }
+
+    label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    input, select {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px 12px;
+      font: inherit;
+      margin-bottom: 14px;
+      background: var(--white);
+    }
+
+    .check-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: -4px 0 16px;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .check-row input {
+      width: auto;
+      margin: 0;
+    }
+
+    .form-links {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 12px;
+      font-size: 0.85rem;
+    }
+
+    .form-links a {
+      color: var(--navy-mid);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .products { padding: 72px 0; }
+
+    .section-head { text-align: center; margin-bottom: 40px; }
+
+    .section-head h2 {
+      font-size: 2rem;
+      letter-spacing: -0.03em;
+      margin-bottom: 8px;
+    }
+
+    .section-head p { color: var(--muted); }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .tile {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 24px;
+      background: var(--white);
+    }
+
+    .tile h3 { margin: 12px 0 8px; font-size: 1.1rem; }
+
+    .tile p, .tile li { color: var(--muted); font-size: 0.95rem; }
+
+    .tile ul {
+      margin: 12px 0 0;
+      padding-left: 18px;
+    }
+
+    .rate {
+      display: inline-block;
+      margin-top: 12px;
+      color: var(--navy);
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    .icon {
+      width: 40px;
+      height: 40px;
+      color: var(--navy);
+    }
+
+    .help {
+      background: var(--paper);
+      padding: 72px 0;
+    }
+
+    .help-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+
+    .help ul {
+      margin: 16px 0 24px;
+      padding-left: 18px;
+      color: var(--muted);
+    }
+
+    .hours {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      font-size: 0.95rem;
+    }
+
+    .hours th, .hours td {
+      text-align: left;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--line);
+      font-weight: 400;
+    }
+
+    .hours th { color: var(--ink); width: 42%; }
+    .hours td { color: var(--muted); }
+
+    .addr {
+      margin-top: 16px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    footer {
+      background: var(--navy);
+      color: rgba(255, 255, 255, 0.72);
+      padding: 40px 0 28px;
+      font-size: 0.9rem;
+    }
+
+    .foot {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      gap: 32px;
+      margin-bottom: 28px;
+    }
+
+    .foot h3 {
+      color: var(--white);
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .foot a:hover { color: var(--gold-light); }
+
+    .foot ul { list-style: none; }
+
+    .foot li { margin-bottom: 8px; }
+
+    .legal {
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      padding-top: 20px;
+      font-size: 0.8rem;
+      line-height: 1.55;
+    }
+
+    .toast {
+      display: none;
+      position: fixed;
+      bottom: 24px;
+      right: 96px;
+      z-index: 20;
+      max-width: min(360px, calc(100% - 120px));
+      background: var(--navy);
+      color: var(--white);
+      padding: 14px 18px;
+      border-radius: 8px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.24);
+    }
+
+    #genesys-messenger,
+    #genesys-thirdparty {
+      z-index: 999999;
+    }
+
+    .toast.show { display: block; }
+
+    @media (max-width: 800px) {
+      .hero-grid, .grid-3, .help-grid, .foot { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap nav">
+      <a class="logo" href="#top" aria-label="G-Bank home">
+        <svg class="logo-mark" viewBox="0 0 36 36" aria-hidden="true">
+          <rect width="36" height="36" rx="8" fill="#c4a35a"/>
+          <text x="18" y="25" text-anchor="middle" font-size="18" font-family="Georgia, serif" font-weight="700" fill="#0c2340">G</text>
+        </svg>
+        G-Bank
+      </a>
+      <ul class="nav-links">
+        <li><a href="#accounts">Checking &amp; savings</a></li>
+        <li><a href="#cards">Cards</a></li>
+        <li><a href="#help">Customer service</a></li>
+      </ul>
+      <a class="btn btn-outline" href="#help" data-open-messenger>Contact us</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <p class="eyebrow">Personal banking</p>
+          <h1>Checking, savings, and a card you can manage from your phone.</h1>
+          <p class="lede">Open an Everyday Checking account in about ten minutes, move money between accounts the same day, and freeze a missing card without waiting on hold. Prefer a person? Customer service is available seven days a week.</p>
+          <div class="hero-actions">
+            <a class="btn btn-gold" href="#accounts">Compare accounts</a>
+            <a class="btn btn-outline" href="#help" data-open-messenger>Talk with us</a>
+          </div>
+        </div>
+        <form class="card" id="login-form">
+          <h2>Sign in to online banking</h2>
+          <label for="user">User ID</label>
+          <input id="user" name="user" autocomplete="username" />
+          <label for="pass">Password</label>
+          <input id="pass" name="pass" type="password" autocomplete="current-password" />
+          <label class="check-row">
+            <input type="checkbox" name="remember" />
+            Remember my User ID
+          </label>
+          <button class="btn btn-navy" type="submit" style="width:100%">Sign in</button>
+          <div class="form-links">
+            <a href="#help">Forgot User ID or password?</a>
+            <a href="#accounts">Open an account</a>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section class="products" id="accounts">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Accounts for everyday banking</h2>
+          <p>No overdraft fees on Everyday Checking. Savings that pays interest. A debit card you can lock from the app.</p>
+        </div>
+        <div class="grid-3">
+          <article class="tile">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18"/>
+            </svg>
+            <h3>Everyday Checking</h3>
+            <p>No monthly service charge with a $500 average daily balance or qualifying direct deposit. Includes bill pay, mobile deposit, and a G-Bank Debit Mastercard.</p>
+            <ul>
+              <li>Same-day transfers between your G-Bank accounts</li>
+              <li>Overdraft protection from linked savings</li>
+            </ul>
+          </article>
+          <article class="tile">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <path d="M12 3v18M7 8h7a3 3 0 0 1 0 6H9a3 3 0 0 0 0 6h8"/>
+            </svg>
+            <h3>High-Yield Savings</h3>
+            <p>$100 to open. No minimum balance after that. Round-up transfers from Everyday Checking land in this account automatically.</p>
+            <span class="rate">4.15% APY on balances up to $250,000</span>
+          </article>
+          <article class="tile" id="cards">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/>
+            </svg>
+            <h3>G-Bank Debit Mastercard</h3>
+            <p>2% cash back on groceries and gas, 1% on everything else, paid monthly into checking. Activate a new card, reset your PIN, or freeze a lost card from online banking or the G-Bank app.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="help" id="help">
+      <div class="wrap help-grid">
+        <div>
+          <p class="eyebrow" style="color: var(--gold)">Customer service</p>
+          <h2 style="font-size: 2rem; letter-spacing: -0.03em; margin-bottom: 12px">We can help with balances, payments, and cards</h2>
+          <p style="color: var(--muted)">Call, chat, or message us any day between 7:00 a.m. and 10:00 p.m. Central. After hours, lock a card or check a balance in the app.</p>
+          <ul>
+            <li>Check available and pending balances</li>
+            <li>Transfer money or pay a bill</li>
+            <li>Activate a new or replacement card</li>
+            <li>Reset a card PIN</li>
+            <li>Report a lost or stolen card and order a replacement</li>
+          </ul>
+          <a class="btn btn-navy" href="tel:+18004226526">Call 1-800-422-6526</a>
+        </div>
+        <div class="tile">
+          <h3>Michigan Avenue branch</h3>
+          <p class="addr">400 North Michigan Avenue<br />Chicago, IL 60611</p>
+          <table class="hours">
+            <caption class="eyebrow" style="color: var(--gold); text-align: left; margin: 16px 0 4px;">Lobby hours</caption>
+            <tbody>
+              <tr><th>Monday–Thursday</th><td>9:00 a.m. – 5:00 p.m.</td></tr>
+              <tr><th>Friday</th><td>9:00 a.m. – 6:00 p.m.</td></tr>
+              <tr><th>Saturday</th><td>9:00 a.m. – 1:00 p.m.</td></tr>
+              <tr><th>Sunday</th><td>Closed</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="foot">
+        <div>
+          <h3>G-Bank, N.A.</h3>
+          <p>Personal and small-business banking across Illinois, Indiana, and Wisconsin. Member FDIC. Equal Housing Lender.</p>
+        </div>
+        <div>
+          <h3>Support</h3>
+          <ul>
+            <li><a href="#help">Customer service</a></li>
+            <li><a href="tel:+18004226526">1-800-422-6526</a></li>
+            <li><a href="#help">Lost or stolen card</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Legal</h3>
+          <ul>
+            <li><a href="#help">Privacy</a></li>
+            <li><a href="#help">Online security</a></li>
+            <li><a href="#help">Accessibility</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="legal">© 2026 G-Bank, National Association. High-Yield Savings APY is accurate as of September 1, 2026 and may change. Fees may reduce earnings. Cash back is paid from G-Bank and is not a Mastercard benefit.</p>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <script>
+    document.getElementById("login-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+      var user = document.getElementById("user").value.trim();
+      var pass = document.getElementById("pass").value;
+      var toast = document.getElementById("toast");
+      toast.textContent = (!user || !pass)
+        ? "Enter your User ID and password to continue."
+        : "We don’t recognize that User ID or password. Check both and try again, or reset your password from customer service.";
+      toast.classList.add("show");
+      setTimeout(function () { toast.classList.remove("show"); }, 4200);
+    });
+
+    document.querySelectorAll("[data-open-messenger]").forEach(function (el) {
+      el.addEventListener("click", function (e) {
+        if (typeof Genesys !== "function") return;
+        e.preventDefault();
+        Genesys("command", "Messenger.open");
+      });
+    });
+  </script>
+</body>
+</html>
